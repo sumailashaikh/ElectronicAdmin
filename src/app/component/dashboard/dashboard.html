@@ -1,0 +1,15 @@
+<div class="sidebar">
+  <a class="active" href="/dashboard">Dashboard</a>
+
+  <ng-container *ngIf="isAuthenticated">
+    <a href="/product-list">ProductList</a>
+  </ng-container>
+
+  <ng-container *ngIf="isAdmin">
+    <a href="/add-page">Add Product</a>
+  </ng-container>
+
+<ng-container *ngIf="isAuthenticated">
+    <a (click)="onLogout()">Logout</a> 
+  </ng-container>
+</div>

@@ -1,0 +1,73 @@
+<div class="container">
+  <h2>Electronics Inventory</h2>
+
+  <div class="filters">
+    <label for="categoryFilter">Select Category: </label>
+    <select id="categoryFilter" [ngModel]="filterCategory()" (ngModelChange)="onCategoryChange($event)">
+      @for (category of categories; track category) {
+        <option [value]="category">{{ category }}</option>
+      }
+    </select>
+
+    <div class="stock-toggle">
+      <button [class.active]="filterInStock() === null" (click)="onStockChange(null)">All</button>
+      <button [class.active]="filterInStock() === true" (click)="onStockChange(true)">Enabled</button>
+      <button [class.active]="filterInStock() === false" (click)="onStockChange(false)">Disabled</button>
+    </div>
+  </div>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of filteredItems(); track item.id) {
+        <tr class="table-row">
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.price | currency:'INR':'symbol':'1.0-0':'en-IN' }}</td>
+
+          <td class="toggle-cell">
+            <button
+              [class.in-stock]="item.inStock"
+              [class.out-of-stock]="!item.inStock"
+              (click)="toggleStock(item); $event.stopPropagation()"
+            >
+              {{ item.inStock ? 'Instock' : 'Outstock' }}
+            </button>
+          </td>
+
+          <td>
+            <button (click)="viewDetails(item)">View Details</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5">No items found matching the filters.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+
+
+  @if (showDetailsPopup() && selectedItem()) {
+    <div class="modal-overlay" (click)="closeDetails()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <h3>{{ selectedItem()!.name }} Details</h3>
+        <p><strong>Category:</strong> {{ selectedItem()!.category }}</p>
+        <p><strong>Price:</strong> {{ selectedItem()!.price | currency:'INR':'symbol':'1.0-0':'en-IN' }}</p>
+        <p><strong>Status:</strong> {{ selectedItem()!.inStock ? 'Enabled' : 'Disabled' }}</p>
+        <p><strong>Description:</strong> {{ selectedItem()!.description }}</p>
+        <button (click)="closeDetails()">Close</button>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,57 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" type="text" formControlName="name" />
+    @if (productForm.get('name')?.invalid && (productForm.get('name')?.dirty || productForm.get('name')?.touched || isSubmitted)) {
+      <div class="error-message">
+        @if (productForm.get('name')?.errors?.['required']) {
+          <span>Name is required.</span>
+        } @else if (productForm.get('name')?.errors?.['minlength']) {
+          <span>Name must be at least 3 characters long.</span>
+        }
+      </div>
+    }
+  </div>
+
+  <div>
+    <label for="category">Category:</label>
+    <input id="category" type="text" formControlName="category" />
+    @if (productForm.get('category')?.invalid && (productForm.get('category')?.dirty || productForm.get('category')?.touched || isSubmitted)) {
+      <div class="error-message">
+        <span>Category is required.</span>
+      </div>
+    }
+  </div>
+
+  <div>
+    <label for="price">Price:</label>
+    <input id="price" type="number" formControlName="price" />
+    @if (productForm.get('price')?.invalid && (productForm.get('price')?.dirty || productForm.get('price')?.touched || isSubmitted)) {
+      <div class="error-message">
+        @if (productForm.get('price')?.errors?.['required']) {
+          <span>Price is required.</span>
+        } @else if (productForm.get('price')?.errors?.['min']) {
+          <span>Price must be greater than 0.</span>
+        }
+      </div>
+    }
+  </div>
+
+  <div>
+    <label for="status">Status:</label>
+    <select id="status" formControlName="status">
+      <option value="Available">Available</option>
+      <option value="Out of Stock">Out of Stock</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="viewDetails">Details:</label>
+    <textarea id="viewDetails" formControlName="viewDetails"></textarea>
+  </div>
+
+  <button type="submit">Add Product</button>
+</form>
+
+<!-- Optional: Display added products -->
+<!-- You can add logic to display the list of products here -->
