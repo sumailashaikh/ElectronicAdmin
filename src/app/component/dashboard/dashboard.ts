@@ -4,11 +4,13 @@ import { Auth } from '../../Services/auth';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
+  standalone:true,
   imports: [CommonModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
+    isSidebarOpen = true;
 constructor(private authService: Auth,private router :Router) {}
 
   // Expose the necessary methods for the template
@@ -21,6 +23,9 @@ constructor(private authService: Auth,private router :Router) {}
     // This controls the visibility of the Add Product link
     return this.authService.hasRole('admin');
   }
+    
+
+
 onLogout(): void {
     this.authService.logout(); // 1. Clear role/token from localStorage
     this.router.navigate(['/login']); // 2. Redirect to a public page (e.g., dashboard or /login)

@@ -8,6 +8,25 @@
   height: 100%;
   overflow: auto;
 }
+/* Default open state */
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+  /* other styles like background, position, etc. */
+}
+
+/* Class applied when closed */
+.sidebar.is-closed {
+  width: 60px; /* Or completely collapse it */
+}
+
+.sidebar-toggle-btn {
+  /* Style your button */
+  cursor: pointer;
+  padding: 10px;
+  background: none;
+  border: none;
+}
 
 /* Sidebar links */
 .sidebar a {

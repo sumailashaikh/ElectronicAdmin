@@ -9,26 +9,34 @@ import { Unauthorised } from './component/unauthorised/unauthorised';
 export const routes: Routes = [
      { path: 'login', component: Login },
   { path: 'unauthorised', component: Unauthorised },
+ 
   {
     path: 'dashboard',
-    component: Dashboard,
-     loadChildren: () => import('./component/dashboard/dashboard').then(m => m.Dashboard),
+    loadComponent: () =>
+      import('./component/dashboard/dashboard').then(m => m.Dashboard),
     canActivate: [AuthGuard],
-    data: { roles: ['user', 'admin'] } // Accessible by both user and admin
+    data: { roles: ['user', 'admin'] }
   },
+
   {
     path: 'product-list',
-    component: Productlist,
-    loadChildren: () => import('./component/productlist/productlist').then(m => m.Productlist),
+    loadComponent: () =>
+      import('./component/productlist/productlist').then(m => m.Productlist),
     canActivate: [AuthGuard],
+    data: { roles: ['user', 'admin'] }
+  },
 
-    data: { roles: ['user', 'admin'] } // Accessible by both user and admin
+  {
+    path: 'add-page',
+    loadComponent: () =>
+      import('./component/add-product-page/add-product-page')
+        .then(m => m.AddProductPage),
+    canActivate: [AuthGuard],
+    data: { role: 'admin' }
   },
 {
     path: 'add-page',
-        loadChildren: () => import('./component/add-product-page/add-product-page').then(m => m.AddProductPage),
-
-    component: AddProductPage,
+        loadComponent: () => import('./component/add-product-page/add-product-page').then(m => m.AddProductPage),
     canActivate: [AuthGuard],        // 1. Must be authenticated
     data: { role: 'admin' }          // 2. Must have the 'admin' role
   },

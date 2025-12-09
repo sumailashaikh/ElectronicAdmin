@@ -9,6 +9,7 @@ interface Product {
 }
 @Component({
   selector: 'app-add-product-page',
+  standalone:true,
   imports: [ReactiveFormsModule],
   templateUrl: './add-product-page.html',
   styleUrl: './add-product-page.css',
