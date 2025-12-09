@@ -32,15 +32,11 @@ export const routes: Routes = [
       import('./component/add-product-page/add-product-page')
         .then(m => m.AddProductPage),
     canActivate: [AuthGuard],
-    data: { role: 'admin' }
+  data: { roles: ['admin'] }
+
   },
-{
-    path: 'add-page',
-        loadComponent: () => import('./component/add-product-page/add-product-page').then(m => m.AddProductPage),
-    canActivate: [AuthGuard],        // 1. Must be authenticated
-    data: { role: 'admin' }          // 2. Must have the 'admin' role
-  },
-  { path: '', redirectTo: '/sidebar', pathMatch: 'full' },
+
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' } // Handle unmatched routes
 
 ];
